@@ -9,7 +9,7 @@ body, div.main, div.command-bar {
 }
 
 body, div.main, div.command-bar {
-  gap: 50px;
+  gap: 20px;
 }
 
 div.header, div.footer {
@@ -40,23 +40,18 @@ div.main {
 div.command-bar {
   justify-content: space-around;
   align-items: center;
-  height: 50px;
+  height: auto;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 20px;
+  background-color: rgb(238, 238, 238);
+  border: 1px rgb(226, 226, 226) solid;
 }
-
-/* div.add-button {
-  margin-left: auto;
-} */
 
 #theme {
   position: relative;
-  /* right: 20px;
-  top: 20px; */
 }
 
 #theme {
-  /* position: relative; */
   display: inline-block;
   width: 30px;
   height: 18px;
@@ -75,7 +70,7 @@ div.command-bar {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: rgb(121, 121, 121);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -104,9 +99,47 @@ input:checked + .slider:before {
   transform: translateX(12px);
 }
 
+select {
+  border-radius: 5px;
+}
+
+button.add-button {
+  height: 30px;
+  color: white;
+  background-color: rgb(45, 94, 255);
+  border: 0px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgb(168, 168, 168);
+  padding-inline: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button .fa-plus {
+  margin-right: 10px;
+}
+
+button.add-button:hover {
+  background-color: rgb(38, 81, 224);
+}
+
+button.add-button:active {
+  background-color: rgb(28, 65, 187);;
+}
+
 div.card-gallery {
   height: 100vh;
-  /* border: black 1px solid; */
+  border-radius: 20px;
+  padding: 10px;
+}
+
+div.card {
+  height: 300px;
+  width: 300px;
+  border: solid 1px lightgray;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 div.footer {
