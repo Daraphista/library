@@ -1,5 +1,8 @@
 const gallery = document.querySelector('.card-gallery');
-const addButton = document.querySelector('.add-button');
+const addButton = document.querySelector('.add');
+const menuButton = document.querySelector('.book');
+const screenBlur = document.querySelector('.blur');
+const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
 const books = [];
 let counter = 1;
 let h3;
@@ -16,12 +19,23 @@ function Book(title, author, pages, currentDate) {
   this.author = author;
   this.pages = pages;
   this['date added'] = `${currentDate.getUTCDate()}/${currentDate.getUTCMonth()}/${currentDate.getUTCFullYear()}`;
-  // console.log(this.date.getUTCDate());
-  // console.log(this.date.getUTCMonth()+1);
-  // console.log(this.date.getUTCFullYear());
 }
 
+menuButton.addEventListener('click', () => {
+  screenBlur.classList.toggle('active');
+
+    hiddenButtons.forEach(button => {
+      button.classList.toggle('hidden');
+    });
+});
+
 addButton.addEventListener('click', () => {
+  screenBlur.classList.toggle('active');
+
+  hiddenButtons.forEach(button => {
+    button.classList.add('hidden');
+  })
+
   const currentDate = new Date();
 
   currentCard = document.createElement('div');
@@ -42,22 +56,3 @@ addButton.addEventListener('click', () => {
 
   counter += 1;
 })
-
-// books[0] = new Book('the Hobbit', 'J.R.R Tolkiens');
-// console.log(books[0].title, books[0].author)
-
-// card = document.querySelector(`div[data-index="${0}"]`);
-// h3 = document.createElement('h3');
-// h3.textContent = "haha";
-// card.appendChild(h3);
-
-
-// addButton.addEventListener('click', () => {
-// card = document.createElement('div');
-// card.classList.add('card');
-// card.dataset.index = 1;
-// gallery.appendChild(card);
-
-// })
-
-// books[1] = document.querySelector(`div[data-index="${1}"]`)

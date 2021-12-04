@@ -10,18 +10,27 @@
   <title>Look at me, Library</title>
 </head>
 <body>
+  <div class="blur">
+      <div class="menu">
+        <button class="theme hidden">
+          <i class="far fa-lightbulb"></i>
+        </button>
+        <button class="add hidden">
+          <i class="fas fa-plus"></i>
+        </button>
+        <button class="book">
+          <i class="fas fa-book"></i>
+        </button>
+      </div>
+  </div>
+
+
   <div class="header">
     <h1>LIBRARY</h1>
   </div>
+
   <div class="main">
     <div class="command-bar">
-      <div class="dark-mode">
-        <strong>dark mode</strong>
-        <label id="theme">
-          <input type="checkbox">
-          <span class="slider"></span>
-        </label>
-      </div>
       <div class="sort-by">
         <strong>sort by</strong>
         <select name="sort-by">
@@ -29,10 +38,6 @@
           <option value="Date-added">Date added</option>
         </select>
       </div>
-      <button class="add-button">
-        <i class="fas fa-plus"></i>
-        <strong>New Book</strong>
-      </button>
     </div>
     <div class="card-gallery">
       <div class="card" data-index="0">
@@ -44,6 +49,7 @@
       </div>
     </div>
   </div>
+
   <div class="footer">
   </div>
 </body>
