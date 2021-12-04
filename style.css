@@ -41,11 +41,27 @@ div.menu button {
 }
 
 button.hidden {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+button.add, button.theme {
+  transition-property: all;
 }
 
 div.menu button.book {
   background-color: rgb(75, 74, 74);
+}
+
+div.menu button.add {
+  transition: 250ms;
+  background-color: rgb(45, 94, 255);
+  padding-left: 15px;
+}
+
+div.menu button.theme {
+  transition: 500ms;
+  background-color: black;
 }
 
 div.menu button.book:hover {
@@ -57,11 +73,6 @@ div.menu button.book:active {
   background-color: rgb(36, 36, 36);
 }
 
-div.menu button.add {
-  background-color: rgb(45, 94, 255);
-  padding-left: 15px;
-}
-
 div.menu button.add:hover {
   cursor: pointer;
   background-color: rgb(21, 76, 255);
@@ -69,10 +80,6 @@ div.menu button.add:hover {
 
 div.menu button.add:active {
   background-color: rgb(0, 60, 255);
-}
-
-div.menu button.theme {
-  background-color: black;
 }
 
 div.menu button.theme:hover {
