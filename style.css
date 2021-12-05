@@ -7,6 +7,7 @@
 
 body {
   flex-direction: column;
+  min-height: 100vh;
   margin: 0px;
 }
 
@@ -40,14 +41,16 @@ div.command-bar, div.main {
 
 .form-popup.active {
   display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  border-radius: 30px;
+  align-items: center;
 }
 
 .form-container {
   position: relative;
   max-width: 500px;
   padding: 10px 20px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 30px;
 }
 
 .form-container button.cancel {
@@ -92,10 +95,10 @@ div.command-bar, div.main {
   outline: none;
 }
 
-.form-container button.confirm {
+.form-popup button.confirm {
   margin-top: 50px;
   margin-bottom: 20px;
-  width: 100%;
+  width: 500px;
   height: 100px;
   border-radius: 20px;
   border: none;
@@ -103,12 +106,12 @@ div.command-bar, div.main {
   background-color: rgb(44, 158, 44);
 }
 
-.form-container button.confirm:hover {
+.form-popup button.confirm:hover {
   cursor: pointer;
   background-color: rgb(33, 134, 33);
 }
 
-.form-container button.confirm:active {
+.form-popup button.confirm:active {
   background-color: rgb(7, 102, 7);
 }
 
@@ -241,7 +244,6 @@ div.main {
   div.card-gallery {
     display: grid;
     grid-template-columns: 300px 300px 300px;
-    height: 100vh;
     border-radius: 20px;
     padding: 10px;
     justify-content: space-between;
@@ -256,10 +258,12 @@ div.main {
       border-radius: 20px;
       padding: 10px;
       box-sizing: border-box;
+      margin-block: 20px;
     }
 
 /* ----------------------------FOOTER---------------------------- */
 
 div.footer {
   height: 100px;
+  margin-top: auto;
 }

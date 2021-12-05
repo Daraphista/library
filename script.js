@@ -1,20 +1,3 @@
-const gallery = document.querySelector('.card-gallery');
-let counter = 1;
-let h3;
-let currentCard;
-
-function Card(index) {
-  this.index = index;
-}
-
-Book.prototype = Object.create(Card.prototype);
-
-function Book(title, author, pages, currentDate) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this['date added'] = `${currentDate.getUTCDate()}/${currentDate.getUTCMonth()}/${currentDate.getUTCFullYear()}`;
-}
 
 // -------------------------menu functionality--------------------------- 
 const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
@@ -44,7 +27,6 @@ addButton.addEventListener('click', () => {
 });
 
 // -----------------------popup functionality--------------------------
-const books = [];
 const cancel = document.querySelector('.cancel');
 const confirmBtn = document.querySelector('.confirm');
 
@@ -53,40 +35,87 @@ cancel.addEventListener('click', () => {
   toggleMenu();
 })
 
-function createCard() {
-  currentCard = document.createElement('div');
-  currentCard.classList.add('card');
-  currentCard.dataset.index = counter;
-  gallery.appendChild(currentCard);
+function createCard(counter) {
+  let card = document.createElement('div');
+  card.classList.add('card');
+  card.dataset.index = counter;
+  gallery.appendChild(card);
   
-  return currentCard
+  return card;
+}
+
+// ----------------------------gallery functionality--------------------
+const gallery = document.querySelector('.card-gallery');
+// const books = [];
+let counter = 1;
+let h3;
+
+const Input = {
+  title: document.getElementById('title'),
+  author: document.getElementById('author'),
+  pages: document.getElementById('pages'),
+}
+
+function addBookCount() {
+  if(typeof(Storage) !== "undefined") {
+    if (localStorage.counter) {
+      localStorage.counter = Number(localStorage.counter)+1;
+    } else {
+      localStorage.counter = 0;
+    }
+  }
+}
+
+function Book(title, author, pages, currentDate) {
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this['date added'] = `${currentDate.getUTCDate()}/${currentDate.getUTCMonth()+1}/${currentDate.getUTCFullYear()}`;
 }
 
 confirmBtn.addEventListener('click', () => {
-  togglePopup();
   toggleMenu();
-  
+  togglePopup();
+  addBookCount();
+
   const currentDate = new Date();
-  
-  currentCard = createCard();
-  
-  books[counter] = new Book(
-    `${document.getElementById('title').value}`,
-    `${document.getElementById('author').value}`,
-    `${document.getElementById('pages').value}`,
+
+  newBook = new Book(
+    `${Input.title.value}`,
+    Input.author.value,
+    Input.pages.value,
     currentDate
-    );
-    
-    books[counter].index = document.querySelector(`div[data-index="${counter}"]`);
-    
-    
-    for(const property in books[counter]) {
-      if(property != 'index') {
-        p = document.createElement('p');
-        p.textContent = `${property}: ${books[counter][property]}`;
-        books[counter].index.appendChild(p);
-      }
+  );
+
+  localStorage.setItem(`${localStorage.counter}`, JSON.stringify(newBook));
+  updateGallery();
+})
+
+function updateGallery() {
+  const cards = [];
+  const books = [];
+
+  while (gallery.lastElementChild) {
+    gallery.removeChild(gallery.lastElementChild);
+  }
+
+  for(const property in localStorage) {
+    if(/[0-9]/.test(property)) {
+      cards.push(createCard(property));
     }
-    
-    counter += 1;
-  })
+  }
+
+  for(const property in localStorage) {
+    if(/[0-9]/.test(property)) {
+      books.push(JSON.parse(localStorage[property]));
+    }
+  }
+  
+  for(i = 0; i < cards.length; i++){
+    for(const property in books[i]) {
+      para = document.createElement('p');
+      para.textContent = `${property}: ${books[i][property]}`;
+      cards[i].appendChild(para);
+    }
+  }
+}
