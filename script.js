@@ -1,10 +1,4 @@
 const gallery = document.querySelector('.card-gallery');
-const addButton = document.querySelector('.add');
-const menuButton = document.querySelector('.book');
-const screenBlur = document.querySelector('.blur');
-const popup = document.querySelector('.form-popup')
-const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
-const books = [];
 let counter = 1;
 let h3;
 let currentCard;
@@ -22,46 +16,77 @@ function Book(title, author, pages, currentDate) {
   this['date added'] = `${currentDate.getUTCDate()}/${currentDate.getUTCMonth()}/${currentDate.getUTCFullYear()}`;
 }
 
-menuButton.addEventListener('click', () => {
+// -------------------------menu functionality--------------------------- 
+const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
+const addButton = document.querySelector('.add');
+const menuButton = document.querySelector('.book');
+const screenBlur = document.querySelector('.blur');
+const popup = document.querySelector('.form-popup');
+
+function toggleMenu() {
   screenBlur.classList.toggle('active');
+  
+  hiddenButtons.forEach(button => {
+    button.classList.toggle('hidden');
+  });
+}
 
-    hiddenButtons.forEach(button => {
-      button.classList.toggle('hidden');
-    });
+function togglePopup() {
+  popup.classList.toggle('active');
+}
+
+menuButton.addEventListener('click', () => {
+  toggleMenu();
 });
-
-screenBlur.addEventListener('click', () => {
-  console.log('lmao');
-})
 
 addButton.addEventListener('click', () => {
-  popup.classList.toggle('active');
+  togglePopup();
 });
 
-// addButton.addEventListener('click', () => {
-//   screenBlur.classList.toggle('active');
+// -----------------------popup functionality--------------------------
+const books = [];
+const cancel = document.querySelector('.cancel');
+const confirmBtn = document.querySelector('.confirm');
 
-//   hiddenButtons.forEach(button => {
-//     button.classList.add('hidden');
-//   })
+cancel.addEventListener('click', () => {
+  togglePopup();
+  toggleMenu();
+})
 
-//   const currentDate = new Date();
-
-//   currentCard = document.createElement('div');
-//   currentCard.classList.add('card');
-//   currentCard.dataset.index = counter;
-
-//   gallery.appendChild(currentCard);
-//   books[counter] = new Book('The Hobbit', 'J.R.R Tolkiens', '299', currentDate);
-//   books[counter].index = document.querySelector(`div[data-index="${counter}"]`);
+function createCard() {
+  currentCard = document.createElement('div');
+  currentCard.classList.add('card');
+  currentCard.dataset.index = counter;
+  gallery.appendChild(currentCard);
   
-//   for(const property in books[counter]) {
-//     if(property != 'index') {
-//       p = document.createElement('p');
-//       p.textContent = `${property}: ${books[counter][property]}`;
-//       books[counter].index.appendChild(p);
-//     }
-//   }
+  return currentCard
+}
 
-//   counter += 1;
-// })
+confirmBtn.addEventListener('click', () => {
+  togglePopup();
+  toggleMenu();
+  
+  const currentDate = new Date();
+  
+  currentCard = createCard();
+  
+  books[counter] = new Book(
+    `${document.getElementById('title').value}`,
+    `${document.getElementById('author').value}`,
+    `${document.getElementById('pages').value}`,
+    currentDate
+    );
+    
+    books[counter].index = document.querySelector(`div[data-index="${counter}"]`);
+    
+    
+    for(const property in books[counter]) {
+      if(property != 'index') {
+        p = document.createElement('p');
+        p.textContent = `${property}: ${books[counter][property]}`;
+        books[counter].index.appendChild(p);
+      }
+    }
+    
+    counter += 1;
+  })
