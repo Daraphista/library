@@ -252,13 +252,50 @@ div.main {
     /* ----------------------------CARD---------------------------- */
 
     div.card {
-      height: 300px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 400px;
       width: 300px;
       border: solid 1px lightgray;
       border-radius: 20px;
       padding: 10px;
       box-sizing: border-box;
       margin-block: 20px;
+      padding: 15px;
+    }
+
+    div.card h2{
+      margin-top: 25px;
+      font-size: 25px;
+    }
+
+    div.card button#remove {
+      border: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    div.card button.status {
+      margin-bottom: px;
+      width: 100%;
+      min-height: 70px;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      background-color: rgb(44, 158, 44);
+    }
+
+    div.card button#remove i {
+      font-size: 15px;
     }
 
 /* ----------------------------FOOTER---------------------------- */

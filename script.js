@@ -1,4 +1,9 @@
 
+window.addEventListener('load', () => {
+  updateGallery();
+
+})
+
 // -------------------------menu functionality--------------------------- 
 const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
 const addButton = document.querySelector('.add');
@@ -35,18 +40,23 @@ cancel.addEventListener('click', () => {
   toggleMenu();
 })
 
-function createCard(counter) {
+function createCard(counter, bookObject) {
   let card = document.createElement('div');
+  card.bookObject = bookObject;
   card.classList.add('card');
   card.dataset.index = counter;
   gallery.appendChild(card);
   
+  const removeButton = document.createElement('button');
+  removeButton.setAttribute('id', 'remove');
+  removeButton.innerHTML = `<i class="fas fa-times"></i>`;
+  card.appendChild(removeButton);
+
   return card;
 }
 
 // ----------------------------gallery functionality--------------------
 const gallery = document.querySelector('.card-gallery');
-// const books = [];
 let counter = 1;
 let h3;
 
@@ -81,27 +91,31 @@ confirmBtn.addEventListener('click', () => {
   const currentDate = new Date();
 
   newBook = new Book(
-    `${Input.title.value}`,
+    Input.title.value,
     Input.author.value,
     Input.pages.value,
     currentDate
   );
 
   localStorage.setItem(`${localStorage.counter}`, JSON.stringify(newBook));
+
+  Input.title.value = '';
+  Input.author.value = '';
+  Input.pages.value = '';
+
   updateGallery();
 })
 
+const cards = [];
+const books = [];
 function updateGallery() {
-  const cards = [];
-  const books = [];
-
   while (gallery.lastElementChild) {
     gallery.removeChild(gallery.lastElementChild);
   }
 
   for(const property in localStorage) {
     if(/[0-9]/.test(property)) {
-      cards.push(createCard(property));
+      cards.push(createCard(property, property));
     }
   }
 
@@ -110,12 +124,32 @@ function updateGallery() {
       books.push(JSON.parse(localStorage[property]));
     }
   }
-  
+    
   for(i = 0; i < cards.length; i++){
-    for(const property in books[i]) {
-      para = document.createElement('p');
-      para.textContent = `${property}: ${books[i][property]}`;
-      cards[i].appendChild(para);
+    const h2 = document.createElement('h2');
+    h2.textContent = `${books[i].title}`;
+    cards[i].appendChild(h2);
+
+    const para1 = document.createElement('p');
+    para1.textContent = `by ${books[i].author}`;
+    cards[i].appendChild(para1);
+
+    const para2 = document.createElement('p');
+    para2.textContent = `${books[i].pages} pages`;
+    cards[i].appendChild(para2);
+
+    const para3 = document.createElement('p');
+    para3.textContent = `${books[i]['date added']}`
+    cards[i].appendChild(para3);
+
+    const statusBtn = document.createElement('button');
+    statusBtn.classList.add('status');
+    cards[i].appendChild(statusBtn);
+
+    if(h2.textContent.length > 20) {
+      h2.style.fontSize = '20px';
     }
+
+    console.log(books[i].title.length);
   }
 }
