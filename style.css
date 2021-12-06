@@ -295,6 +295,7 @@ div.main {
     }
 
     div.card button#remove i {
+      pointer-events: none;
       font-size: 15px;
     }
 

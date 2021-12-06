@@ -4,6 +4,10 @@ window.addEventListener('load', () => {
 
 })
 
+
+const removeButtons = [];
+removeButtons.forEach(button => console.log(button));
+
 // -------------------------menu functionality--------------------------- 
 const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
 const addButton = document.querySelector('.add');
@@ -46,11 +50,6 @@ function createCard(counter, bookObject) {
   card.classList.add('card');
   card.dataset.index = counter;
   gallery.appendChild(card);
-  
-  const removeButton = document.createElement('button');
-  removeButton.setAttribute('id', 'remove');
-  removeButton.innerHTML = `<i class="fas fa-times"></i>`;
-  card.appendChild(removeButton);
 
   return card;
 }
@@ -146,10 +145,25 @@ function updateGallery() {
     statusBtn.classList.add('status');
     cards[i].appendChild(statusBtn);
 
+    const removeButton = document.createElement('button');
+    removeButton.setAttribute('id', 'remove');
+    removeButton.innerHTML = `<i class="fas fa-times"></i>`;
+    cards[i].appendChild(removeButton);
+    removeButtons.push(removeButton);
+
     if(h2.textContent.length > 20) {
       h2.style.fontSize = '20px';
     }
 
-    console.log(books[i].title.length);
   }
 }
+
+gallery.addEventListener('click', (e) => {
+  if(e.target.id == 'remove') {
+    result = confirm('Are you sure you want to delete this book?');
+    if(result) {
+      localStorage.removeItem(`${e.target.parentNode.bookObject}`);
+    }
+    updateGallery();
+  }
+}, false)
