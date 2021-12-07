@@ -284,7 +284,7 @@ div.main {
       align-items: center;
     }
 
-    div.card button.status {
+    div.card button#readStatus {
       margin-bottom: px;
       width: 100%;
       min-height: 70px;
@@ -292,6 +292,8 @@ div.main {
       border: none;
       color: white;
       background-color: rgb(44, 158, 44);
+      /* box-shadow: 0px 0px 8px rgb(68, 68, 68); */
+      box-shadow: 0px 7px rgb(10, 119, 10);
     }
 
     div.card button#remove i {

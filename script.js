@@ -1,12 +1,9 @@
 
 window.addEventListener('load', () => {
   updateGallery();
-
+  // console.log(JSON.parse(localStorage.books));
 })
 
-
-const removeButtons = [];
-removeButtons.forEach(button => console.log(button));
 
 // -------------------------menu functionality--------------------------- 
 const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
@@ -44,19 +41,9 @@ cancel.addEventListener('click', () => {
   toggleMenu();
 })
 
-function createCard(counter, bookObject) {
-  let card = document.createElement('div');
-  card.bookObject = bookObject;
-  card.classList.add('card');
-  card.dataset.index = counter;
-  gallery.appendChild(card);
-
-  return card;
-}
-
 // ----------------------------gallery functionality--------------------
 const gallery = document.querySelector('.card-gallery');
-let counter = 1;
+
 let h3;
 
 const Input = {
@@ -65,105 +52,103 @@ const Input = {
   pages: document.getElementById('pages'),
 }
 
-function addBookCount() {
-  if(typeof(Storage) !== "undefined") {
-    if (localStorage.counter) {
-      localStorage.counter = Number(localStorage.counter)+1;
-    } else {
-      localStorage.counter = 0;
-    }
-  }
-}
-
-function Book(title, author, pages, currentDate) {
+function Book(title, author, pages, currentDate, readStatus) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this['date added'] = `${currentDate.getUTCDate()}/${currentDate.getUTCMonth()+1}/${currentDate.getUTCFullYear()}`;
+  this.readStatus = readStatus;
 }
+
+const books = JSON.parse(localStorage.books);
 
 confirmBtn.addEventListener('click', () => {
   toggleMenu();
   togglePopup();
-  addBookCount();
-
+  
   const currentDate = new Date();
-
+  
   newBook = new Book(
     Input.title.value,
     Input.author.value,
     Input.pages.value,
-    currentDate
-  );
+    currentDate,
+    false
+    );
+    
+    books.push(newBook);
+    localStorage.setItem('books', JSON.stringify(books));
 
-  localStorage.setItem(`${localStorage.counter}`, JSON.stringify(newBook));
-
-  Input.title.value = '';
-  Input.author.value = '';
-  Input.pages.value = '';
-
-  updateGallery();
+    Input.title.value = '';
+    Input.author.value = '';
+    Input.pages.value = '';
+    
+    updateGallery();
 })
-
-const cards = [];
-const books = [];
+  
 function updateGallery() {
   while (gallery.lastElementChild) {
     gallery.removeChild(gallery.lastElementChild);
   }
-
-  for(const property in localStorage) {
-    if(/[0-9]/.test(property)) {
-      cards.push(createCard(property, property));
-    }
-  }
-
-  for(const property in localStorage) {
-    if(/[0-9]/.test(property)) {
-      books.push(JSON.parse(localStorage[property]));
-    }
-  }
-    
-  for(i = 0; i < cards.length; i++){
-    const h2 = document.createElement('h2');
-    h2.textContent = `${books[i].title}`;
-    cards[i].appendChild(h2);
-
-    const para1 = document.createElement('p');
-    para1.textContent = `by ${books[i].author}`;
-    cards[i].appendChild(para1);
-
-    const para2 = document.createElement('p');
-    para2.textContent = `${books[i].pages} pages`;
-    cards[i].appendChild(para2);
-
-    const para3 = document.createElement('p');
-    para3.textContent = `${books[i]['date added']}`
-    cards[i].appendChild(para3);
-
-    const statusBtn = document.createElement('button');
-    statusBtn.classList.add('status');
-    cards[i].appendChild(statusBtn);
-
-    const removeButton = document.createElement('button');
-    removeButton.setAttribute('id', 'remove');
-    removeButton.innerHTML = `<i class="fas fa-times"></i>`;
-    cards[i].appendChild(removeButton);
-    removeButtons.push(removeButton);
-
-    if(h2.textContent.length > 20) {
-      h2.style.fontSize = '20px';
-    }
-
-  }
+  
+  
+  const bookArray = JSON.parse(localStorage.books);
+  
+  bookArray.forEach(book => {
+    createCard(bookArray.indexOf(book), book);
+  })
 }
+    
+function createCard(bookIndex, bookObj) {
+  const newCard = document.createElement('div');
+  newCard.classList.add('card');
+  newCard.dataset.index = bookIndex;
+  gallery.appendChild(newCard);
 
+  const h2 = document.createElement('h2');
+  h2.textContent = bookObj.title;
+  newCard.appendChild(h2);
+
+  const para1 = document.createElement('p');
+  para1.textContent = bookObj.author;
+  newCard.appendChild(para1);
+
+  const para2 = document.createElement('p');
+  para2.textContent = bookObj.pages;
+  newCard.appendChild(para2);
+
+  const para3 = document.createElement('p');
+  para3.textContent = bookObj['date added'];
+  newCard.appendChild(para3);
+
+  const newDeleteBtn = document.createElement('button');
+  newDeleteBtn.setAttribute('id', 'remove');
+  newDeleteBtn.index = bookIndex;
+  newDeleteBtn.innerHTML = `<i class="fas fa-times"></i>`;
+  newCard.appendChild(newDeleteBtn);
+
+  const statusBtn = document.createElement('button');
+  statusBtn.setAttribute('id', 'readStatus');
+  statusBtn.index = bookIndex;
+  statusBtn.textContent = (bookObj.readStatus) ? 'Finished!' : 'Unread';
+  newCard.appendChild(statusBtn);
+}
+  
 gallery.addEventListener('click', (e) => {
   if(e.target.id == 'remove') {
     result = confirm('Are you sure you want to delete this book?');
     if(result) {
-      localStorage.removeItem(`${e.target.parentNode.bookObject}`);
+      books.splice((e.target.index), 1);
+      localStorage.setItem('books', JSON.stringify(books));
     }
-    updateGallery();
   }
+  
+  if(e.target.id == 'readStatus') {
+    books[e.target.index].readStatus = (books[e.target.index].readStatus) ? false : true;
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+
+  updateGallery();
 }, false)
+
+
