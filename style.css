@@ -292,8 +292,25 @@ div.main {
       border: none;
       color: white;
       background-color: rgb(44, 158, 44);
-      /* box-shadow: 0px 0px 8px rgb(68, 68, 68); */
       box-shadow: 0px 7px rgb(10, 119, 10);
+      cursor: pointer;
+    }
+
+    div.card button#readStatus:active {
+      box-shadow: 0px 2px rgb(10, 119, 10);
+      transform: translateY(5px);
+    }
+
+    div.card .finished {
+      margin-bottom: px;
+      width: 100%;
+      min-height: 70px;
+      border-radius: 10px;
+      border: none;
+      color: rgb(255, 255, 255);
+      background-color: rgb(236, 208, 47);
+      /* box-shadow: 0px 7px rgb(180, 156, 18); */
+      cursor: pointer;
     }
 
     div.card button#remove i {
