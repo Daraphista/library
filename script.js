@@ -1,7 +1,10 @@
 
 window.addEventListener('load', () => {
   updateGallery();
-  // console.log(JSON.parse(localStorage.books));
+  if(localStorage.books === undefined) {
+    const books = [];
+    localStorage.setItem('books', JSON.stringify(books));
+  }
 })
 
 
