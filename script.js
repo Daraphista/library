@@ -1,10 +1,9 @@
 window.addEventListener('load', () => {
   updateGallery();
-  localStorage.clear();
-  if(localStorage.books == undefined) {
-    storeBooksInLocal();
-    console.log(JSON.parse(localStorage.books));
-  }
+  console.log(localStorage);
+
+  let bookArray = localStorage.getItem('books') ? JSON.parse(localStorage.getItem('books')) : [];
+  localStorage.setItem('books', JSON.stringify(bookArray));
 })
 
 function storeBooksInLocal() {
@@ -86,10 +85,7 @@ function Book(title, author, pages, currentDate, readStatus) {
   this.readStatus = readStatus;
 }
 
-if(localStorage.books == undefined) {
-  storeBooksInLocal();
-  const books = JSON.parse(localStorage.books);
-}
+const books = JSON.parse(localStorage.books);
 
 confirmBtn.addEventListener('click', () => {
   toggleMenu();
@@ -120,14 +116,12 @@ function updateGallery() {
     gallery.removeChild(gallery.lastElementChild);
   }
   
-  if(localStorage.books == undefined) {
-    storeBooksInLocal();
-    const bookArray = JSON.parse(localStorage.books);
-    
-    bookArray.forEach(book => {
-      createCard(bookArray.indexOf(book), book);
-    })
-  }
+  
+  const bookArray = JSON.parse(localStorage.books);
+  
+  bookArray.forEach(book => {
+    createCard(bookArray.indexOf(book), book);
+  })
 }
     
 function createCard(bookIndex, bookObj) {
