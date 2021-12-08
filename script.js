@@ -86,10 +86,10 @@ function Book(title, author, pages, currentDate, readStatus) {
   this.readStatus = readStatus;
 }
 
-
-const books = JSON.parse(localStorage.books);
-
-
+if(localStorage.books == undefined) {
+  storeBooksInLocal();
+  const books = JSON.parse(localStorage.books);
+}
 
 confirmBtn.addEventListener('click', () => {
   toggleMenu();
@@ -120,12 +120,14 @@ function updateGallery() {
     gallery.removeChild(gallery.lastElementChild);
   }
   
-  
-  const bookArray = JSON.parse(localStorage.books);
-  
-  bookArray.forEach(book => {
-    createCard(bookArray.indexOf(book), book);
-  })
+  if(localStorage.books == undefined) {
+    storeBooksInLocal();
+    const bookArray = JSON.parse(localStorage.books);
+    
+    bookArray.forEach(book => {
+      createCard(bookArray.indexOf(book), book);
+    })
+  }
 }
     
 function createCard(bookIndex, bookObj) {
