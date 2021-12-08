@@ -7,6 +7,26 @@ window.addEventListener('load', () => {
   }
 })
 
+window.addEventListener('scroll', () => {
+  const bottomOfWindow = window.scrollY + window.innerHeight;
+  const footerPosition = document.querySelector('.footer').offsetTop;
+  const footerHeight = document.querySelector('.footer').clientHeight;
+  const blur = document.querySelector('.blur');
+
+  if(window.matchMedia('(max-width: 1000px)')) {
+
+    if(bottomOfWindow > footerPosition) {
+      blur.style.bottom = `${footerHeight}px`;
+      blur.style.transition = `100ms`;
+      console.log('lmao');
+    } else if(bottomOfWindow < footerPosition) {
+      blur.style.bottom = `0px`;
+    }      
+  }
+
+  
+})
+
 
 // -------------------------menu functionality--------------------------- 
 const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
@@ -110,6 +130,7 @@ function createCard(bookIndex, bookObj) {
 
   const h2 = document.createElement('h2');
   h2.textContent = bookObj.title;
+  h2.style.fontSize = (h2.textContent.length > 20) ? '20px' : '30px' ;
   newCard.appendChild(h2);
 
   const para1 = document.createElement('p');

@@ -9,6 +9,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0px;
+  min-width: 100%;
 }
 
 body, div.main, div.command-bar {
@@ -27,12 +28,17 @@ div.command-bar, div.main {
   background: rgba(20, 20, 20, 0.4);
   backdrop-filter: blur(10px);
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.blur {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
 /* ----------------------------FORM---------------------------- */
 
 .form-popup {
@@ -141,7 +147,6 @@ div.menu button {
 
 #icon {
   font-size: 50px;
-  
 }
 
 button.hidden {
@@ -205,7 +210,6 @@ div.header {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: 200px;
   color: white;
 }
@@ -220,7 +224,6 @@ h1 {
 div.main {
   align-self: center;
   flex-direction: column;
-  width: 1000px;
 }
 
   /* ----------------------------COMMAND BAR---------------------------- */
@@ -244,6 +247,7 @@ div.main {
   div.card-gallery {
     display: grid;
     grid-template-columns: 300px 300px 300px;
+    gap: 50px;
     border-radius: 20px;
     padding: 10px;
     justify-content: space-between;
@@ -257,7 +261,7 @@ div.main {
       flex-direction: column;
       justify-content: space-between;
       min-height: 400px;
-      width: 300px;
+      width: auto;
       border: solid 1px lightgray;
       border-radius: 20px;
       padding: 10px;
@@ -323,4 +327,65 @@ div.main {
 div.footer {
   height: 100px;
   margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.footer p {
+  margin-top: 10px;
+  font-size: 20px;
+  color: white;
+}
+
+
+
+
+
+
+@media (max-width: 1200px) and (min-width: 1001px) {
+  h1 {
+    font-size: 80px;
+    margin: 0px;
+  }
+
+
+  div.card-gallery {
+    gap: 50px;
+    grid-template-columns: 300px 300px;
+    width: auto;
+    align-self: center;
+  }
+}
+
+@media (max-width: 1000px) {
+  h1 {
+    font-size: 70px;
+    margin: 0px;
+  }
+
+  div.card-gallery {
+    grid-template-columns: 300px;
+    width: auto;
+    align-self: center;
+  }
+
+  div.menu {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  div.menu button {
+    box-shadow: 0px 0px 8px rgb(68, 68, 68);
+    height: 70px;
+    width: 70px;
+    border-radius: 40px;
+    border: 0px;
+    color: white;
+  }
+
+  #icon {
+    font-size: 40px;
+  }
 }

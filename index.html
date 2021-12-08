@@ -3,15 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="height=device-height, 
+  width=device-width, initial-scale=1.0, 
+  minimum-scale=1.0, maximum-scale=1.0, 
+  user-scalable=no, target-densitydpi=device-dpi">
   <link rel="stylesheet" href="style.css">
   <script src="https://kit.fontawesome.com/ba581a8a22.js" crossorigin="anonymous"></script>
   <script src="script.js" defer></script>
   <title>Look at me, Library</title>
 </head>
 <body>
+  
+  <div class="header">
+    <h1>LIBRARY</h1>
+  </div>
+  
+  <div class="main">
+    <!-- <div class="command-bar">
+      <div class="sort-by">
+        <strong>sort by</strong>
+        <select name="sort-by">
+          <option value="A-Z">A-Z</option>
+          <option value="Date-added">Date added</option>
+        </select>
+      </div>
+    </div> -->
+    <div class="card-gallery">
+    </div>
+  </div>
+  
   <div class="blur">
-
       <div class="menu">
         <button class="theme hidden">
           <i class="far fa-lightbulb" id="icon"></i>
@@ -23,7 +44,7 @@
           <i class="fas fa-book" id="icon"></i>
         </button>
       </div>
-
+  
       <div class="form-popup">
         <form class="form-container">
           <button class="cancel"><i class="fas fa-times"></i></button>
@@ -40,28 +61,10 @@
         </form>
         <button class="confirm"><b>Confirm</b></button>
       </div>
-
-  </div>
-
-  <div class="header">
-    <h1>LIBRARY</h1>
-  </div>
-
-  <div class="main">
-    <div class="command-bar">
-      <div class="sort-by">
-        <strong>sort by</strong>
-        <select name="sort-by">
-          <option value="A-Z">A-Z</option>
-          <option value="Date-added">Date added</option>
-        </select>
-      </div>
-    </div>
-    <div class="card-gallery">
-    </div>
   </div>
 
   <div class="footer">
+    <p>Copyright © 2021 Daraphista</p>
   </div>
 </body>
 </html>
