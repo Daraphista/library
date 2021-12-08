@@ -1,20 +1,27 @@
-
 window.addEventListener('load', () => {
   updateGallery();
-  if(localStorage.books === undefined) {
-    const books = [];
-    localStorage.setItem('books', JSON.stringify(books));
+  console.log(localStorage);
+
+  try {
+    console.log(JSON.parse(localStorage.books));
+  } catch {
+    storeBooksInLocal();
   }
 })
+
+function storeBooksInLocal() {
+  const books = [];
+  localStorage.setItem('books', JSON.stringify(books));
+}
 
 window.addEventListener('scroll', () => {
   const bottomOfWindow = window.scrollY + window.innerHeight;
   const footerPosition = document.querySelector('.footer').offsetTop;
   const footerHeight = document.querySelector('.footer').clientHeight;
   const blur = document.querySelector('.blur');
-
+  
   if(window.matchMedia('(max-width: 1000px)')) {
-
+    
     if(bottomOfWindow > footerPosition) {
       blur.style.bottom = `${footerHeight}px`;
       blur.style.transition = `100ms`;
