@@ -23,8 +23,6 @@ window.addEventListener('scroll', () => {
       blur.style.bottom = `0px`;
     }      
   }
-
-  
 })
 
 
