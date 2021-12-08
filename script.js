@@ -1,11 +1,9 @@
 window.addEventListener('load', () => {
   updateGallery();
-  console.log(localStorage);
-
-  try {
-    console.log(JSON.parse(localStorage.books));
-  } catch {
+  localStorage.clear();
+  if(localStorage.books == undefined) {
     storeBooksInLocal();
+    console.log(JSON.parse(localStorage.books));
   }
 })
 
@@ -88,7 +86,10 @@ function Book(title, author, pages, currentDate, readStatus) {
   this.readStatus = readStatus;
 }
 
+
 const books = JSON.parse(localStorage.books);
+
+
 
 confirmBtn.addEventListener('click', () => {
   toggleMenu();
