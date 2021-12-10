@@ -1,34 +1,10 @@
 window.addEventListener('load', () => {
   updateGallery();
   console.log(localStorage);
-
-  let bookArray = localStorage.getItem('books') ? JSON.parse(localStorage.getItem('books')) : [];
-  localStorage.setItem('books', JSON.stringify(bookArray));
 })
 
-function storeBooksInLocal() {
-  const books = [];
-  localStorage.setItem('books', JSON.stringify(books));
-}
-
-window.addEventListener('scroll', () => {
-  const bottomOfWindow = window.scrollY + window.innerHeight;
-  const footerPosition = document.querySelector('.footer').offsetTop;
-  const footerHeight = document.querySelector('.footer').clientHeight;
-  const blur = document.querySelector('.blur');
-  
-  if(window.matchMedia('(max-width: 1000px)')) {
-    
-    if(bottomOfWindow > footerPosition) {
-      blur.style.bottom = `${footerHeight}px`;
-      blur.style.transition = `100ms`;
-      console.log('lmao');
-    } else if(bottomOfWindow < footerPosition) {
-      blur.style.bottom = `0px`;
-    }      
-  }
-})
-
+let bookArray = localStorage.getItem('books') ? JSON.parse(localStorage.getItem('books')) : [];
+localStorage.setItem('books', JSON.stringify(bookArray));
 
 // -------------------------menu functionality--------------------------- 
 const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
@@ -36,6 +12,20 @@ const addButton = document.querySelector('.add');
 const menuButton = document.querySelector('.book');
 const screenBlur = document.querySelector('.blur');
 const popup = document.querySelector('.form-popup');
+
+function adjustMenuPosition() {
+  const bottomOfWindow = window.scrollY + window.innerHeight;
+  const footerPosition = document.querySelector('.footer').offsetTop;
+  const menu = document.querySelector('.menu');
+  const blur = document.querySelector('.blur');
+  if(bottomOfWindow > footerPosition && !blur.classList.contains('active')) {
+    menu.style.bottom = `${bottomOfWindow - footerPosition + 10}px`;
+    console.log(blur.classList.contains('active'));
+  } else if(bottomOfWindow < footerPosition || blur.classList.contains('active')) {
+    menu.style.bottom = `30px`;
+    menu.style.transition = `200ms`;
+  }
+}
 
 function toggleMenu() {
   screenBlur.classList.toggle('active');
@@ -50,7 +40,11 @@ function togglePopup() {
 }
 
 menuButton.addEventListener('click', () => {
+  if(popup.classList.contains('active')) {
+    togglePopup();
+  }
   toggleMenu();
+  adjustMenuPosition();
 });
 
 addButton.addEventListener('click', () => {
@@ -115,8 +109,7 @@ function updateGallery() {
   while (gallery.lastElementChild) {
     gallery.removeChild(gallery.lastElementChild);
   }
-  
-  
+
   const bookArray = JSON.parse(localStorage.books);
   
   bookArray.forEach(book => {
@@ -176,5 +169,3 @@ gallery.addEventListener('click', (e) => {
 
   updateGallery();
 }, false)
-
-
