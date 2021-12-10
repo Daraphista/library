@@ -1,10 +1,13 @@
-window.addEventListener('load', () => {
-  updateGallery();
-  console.log(localStorage);
-})
-
 let bookArray = localStorage.getItem('books') ? JSON.parse(localStorage.getItem('books')) : [];
 localStorage.setItem('books', JSON.stringify(bookArray));
+
+window.addEventListener('load', () => {
+  updateGallery();
+})
+
+window.addEventListener('scroll', () => {
+  adjustMenuPosition();
+})
 
 // -------------------------menu functionality--------------------------- 
 const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
