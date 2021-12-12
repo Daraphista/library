@@ -3,60 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="height=device-height, 
-  width=device-width, initial-scale=1.0, 
-  minimum-scale=1.0, maximum-scale=1.0, 
-  user-scalable=no, target-densitydpi=device-dpi">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/ba581a8a22.js" crossorigin="anonymous"></script>
   <script src="script.js" defer></script>
-  <title>Look at me, Library</title>
-  <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <title>Library</title>
 </head>
 <body>
-  
-  <div class="header">
+
+  <div class="banner">
     <h1>LIBRARY</h1>
-  </div>
-  
+  </div>  
+
   <div class="main">
-    <div class="card-gallery">
-    </div>
+    <p>Wow... such empty</p>
   </div>
-  
-  <div class="blur">
-    <div class="form-popup">
-      <form class="form-container">
-        <button class="cancel"><i class="fas fa-times"></i></button>
-        <h2>Add New Book</h2>
-        <label for="title">Title
-          <input type="text" placeholder="Enter Title" id="title" required>
-        </label>
-        <label for="author">Author
-          <input type="text" placeholder="Enter Author" id="author">
-        </label>
-        <label for="pages">Number of Pages
-          <input type="text" placeholder="Enter Number of Pages" id="pages">
-        </label>
-      </form>
-      <button class="confirm"><b>Confirm</b></button>
-    </div>
-      
-      <div class="menu">
-        <button class="theme hidden">
-          <i class="far fa-lightbulb" id="icon"></i>
-        </button>
-        <button class="add hidden">
-          <i class="fas fa-plus" id="icon"></i>
-        </button>
-        <button class="book">
-          <i class="fas fa-book" id="icon"></i>
-        </button>
-      </div>
-    </div>
 
   <div class="footer">
-    <p>Copyright © 2021 Daraphista</p>
+    Copyright © 2021 Daraphista
   </div>
+
+  <div class="menu">
+    <div class="buttons">
+      <button class="hidden" id="theme"><i class="far fa-lightbulb" id="icon"></i></button>
+      <button class="hidden" id="add"><i class="fas fa-plus" id="icon"></i></button>
+      <button id="menu"><i class="fas fa-book" id="icon"></i></button>
+    </div>  
+    <form class="hidden">
+      <button class="cancel"><i class="fas fa-times"></i></button>
+      <h1>Add New Book</h1>
+      <label for="title">Title<br></label>
+        <input type="text" placeholder="Enter Title" id="title" required> <br>
+      <label for="author">Author <br></label>
+        <input type="text" placeholder="Enter Author" id="author"> <br>
+      <label for="pages">Number of Pages <br></label>
+        <input type="text" placeholder="Enter Number of Pages" id="pages"> <br>
+      <button class="confirm"><b>Confirm</b></button>
+    </form>
+  </div>
+  
 </body>
 </html>

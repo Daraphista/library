@@ -1,174 +1,97 @@
-let bookArray = localStorage.getItem('books') ? JSON.parse(localStorage.getItem('books')) : [];
-localStorage.setItem('books', JSON.stringify(bookArray));
+let bookList = localStorage.getItem('books') ? JSON.parse(localStorage.getItem('books')) : [];
+localStorage.setItem('books', JSON.stringify(bookList));
 
 window.addEventListener('load', () => {
-  updateGallery();
+  displayBooks();
 })
 
-window.addEventListener('scroll', () => {
-  adjustMenuPosition();
-})
+// ------------------------- MENU -------------------------
 
-// -------------------------menu functionality--------------------------- 
-const hiddenButtons = Array.from(document.querySelectorAll('.hidden'));
-const addButton = document.querySelector('.add');
-const menuButton = document.querySelector('.book');
-const screenBlur = document.querySelector('.blur');
-const popup = document.querySelector('.form-popup');
+const menuBtn = document.getElementById('menu');
+const addBtn = document.getElementById('add');
+const themeBtn = document.getElementById('theme');
 
-function adjustMenuPosition() {
-  const bottomOfWindow = window.scrollY + window.innerHeight;
-  const footerPosition = document.querySelector('.footer').offsetTop;
-  const menu = document.querySelector('.menu');
-  const blur = document.querySelector('.blur');
-  if(bottomOfWindow > footerPosition && !blur.classList.contains('active')) {
-    menu.style.bottom = `${bottomOfWindow - footerPosition + 10}px`;
-    console.log(blur.classList.contains('active'));
-  } else if(bottomOfWindow < footerPosition || blur.classList.contains('active')) {
-    menu.style.bottom = `30px`;
-    menu.style.transition = `200ms`;
-  }
-}
-
-function toggleMenu() {
-  screenBlur.classList.toggle('active');
-  
-  hiddenButtons.forEach(button => {
-    button.classList.toggle('hidden');
-  });
-}
-
-function togglePopup() {
-  popup.classList.toggle('active');
-}
-
-menuButton.addEventListener('click', () => {
-  if(popup.classList.contains('active')) {
-    togglePopup();
-  }
+menuBtn.addEventListener('click', () => {
   toggleMenu();
-  adjustMenuPosition();
 });
 
-addButton.addEventListener('click', () => {
-  togglePopup();
+  function toggleMenu() {
+    addBtn.classList.toggle('hidden'); 
+    themeBtn.classList.toggle('hidden');
+    toggleBlur();
+  }
+  function toggleBlur() {
+    document.querySelector('.menu').classList.toggle('blurred');
+  }
+
+addBtn.addEventListener('click', () => {
+  togglePopupForm(); 
+})
+
+  function togglePopupForm() {
+    document.querySelector('form').classList.toggle('hidden');
+  }
+
+themeBtn.addEventListener('click', () => {
+  console.log('dark mode');
 });
 
-// -----------------------popup functionality--------------------------
-const cancel = document.querySelector('.cancel');
+// ------------------------- POPUP FORM -------------------------
+
+const cancelBtn = document.querySelector('.cancel');
 const confirmBtn = document.querySelector('.confirm');
 
-cancel.addEventListener('click', () => {
-  togglePopup();
+cancelBtn.addEventListener('click', () => {
   toggleMenu();
+  togglePopupForm();
 })
 
-// ----------------------------gallery functionality--------------------
-const gallery = document.querySelector('.card-gallery');
-
-let h3;
-
-const Input = {
-  title: document.getElementById('title'),
-  author: document.getElementById('author'),
-  pages: document.getElementById('pages'),
-}
-
-function Book(title, author, pages, currentDate, readStatus) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this['date added'] = `${currentDate.getUTCDate()}/${currentDate.getUTCMonth()+1}/${currentDate.getUTCFullYear()}`;
-  this.readStatus = readStatus;
-}
-
-const books = JSON.parse(localStorage.books);
-
-confirmBtn.addEventListener('click', () => {
-  toggleMenu();
-  togglePopup();
-  
-  const currentDate = new Date();
-  
-  newBook = new Book(
-    Input.title.value,
-    Input.author.value,
-    Input.pages.value,
-    currentDate,
-    false
-    );
-    
-    books.push(newBook);
-    localStorage.setItem('books', JSON.stringify(books));
-
-    Input.title.value = '';
-    Input.author.value = '';
-    Input.pages.value = '';
-    
-    updateGallery();
-})
-  
-function updateGallery() {
-  while (gallery.lastElementChild) {
-    gallery.removeChild(gallery.lastElementChild);
+  function Book(title, author, pages) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.date = `${new Date().getUTCDate()}/${new Date().getUTCMonth()}/${new Date().getUTCFullYear()}`;
+    this.finishedReading = false;
   }
 
-  const bookArray = JSON.parse(localStorage.books);
-  
-  bookArray.forEach(book => {
-    createCard(bookArray.indexOf(book), book);
+  Book.prototype.displayInfo = function() {
+    console.log('lmao');
+  }
+
+confirmBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  toggleMenu();
+  togglePopupForm();
+
+  const book = new Book(
+    document.getElementById('title').value,
+    document.getElementById('author').value,
+    document.getElementById('pages').value,
+  )
+
+  bookList.push(book);
+  localStorage.setItem('books', JSON.stringify(bookList));
+})
+
+const main = document.querySelector('.main');
+
+function displayBooks() {
+  while(main.lastElementChild) {
+    main.removeChild(main.lastElementChild);
+  }
+
+  bookList.forEach(book => {
+    createCard(book);
   })
 }
-    
-function createCard(bookIndex, bookObj) {
-  const newCard = document.createElement('div');
-  newCard.classList.add('card');
-  newCard.dataset.index = bookIndex;
-  gallery.appendChild(newCard);
 
-  const h2 = document.createElement('h2');
-  h2.textContent = bookObj.title;
-  h2.style.fontSize = (h2.textContent.length > 20) ? '20px' : '30px' ;
-  newCard.appendChild(h2);
+  function createCard(book) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.book = book;
+    main.append(card);
 
-  const para1 = document.createElement('p');
-  para1.textContent = bookObj.author;
-  newCard.appendChild(para1);
-
-  const para2 = document.createElement('p');
-  para2.textContent = bookObj.pages;
-  newCard.appendChild(para2);
-
-  const para3 = document.createElement('p');
-  para3.textContent = bookObj['date added'];
-  newCard.appendChild(para3);
-
-  const newDeleteBtn = document.createElement('button');
-  newDeleteBtn.setAttribute('id', 'remove');
-  newDeleteBtn.index = bookIndex;
-  newDeleteBtn.innerHTML = `<i class="fas fa-times"></i>`;
-  newCard.appendChild(newDeleteBtn);
-
-  const statusBtn = document.createElement('button');
-  statusBtn.setAttribute('id', 'readStatus');
-  statusBtn.index = bookIndex;
-  statusBtn.textContent = (bookObj.readStatus) ? 'Finished!' : 'Unread';
-  newCard.appendChild(statusBtn);
-}
-  
-gallery.addEventListener('click', (e) => {
-  if(e.target.id == 'remove') {
-    result = confirm('Are you sure you want to delete this book?');
-    if(result) {
-      books.splice((e.target.index), 1);
-      localStorage.setItem('books', JSON.stringify(books));
-    }
-  }
-  
-  if(e.target.id == 'readStatus') {
-    books[e.target.index].readStatus = (books[e.target.index].readStatus) ? false : true;
-    localStorage.setItem('books', JSON.stringify(books));
+    book.displayInfo();
   }
 
-  updateGallery();
-}, false)
+
