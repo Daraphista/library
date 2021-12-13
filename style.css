@@ -30,10 +30,48 @@ body {
   width: min(80%, 70.5rem);
   margin-inline: auto;
   flex-wrap: wrap;
+  padding: 5rem;
+  gap: 3rem;
 }
 
 .card {
-  border: black solid 1px;
+  position: relative;
+  flex-direction: column;
+  width: min(18rem);
+  height: min(25rem);
+  padding: 1.5em;
+  justify-content: space-between;
+  box-shadow: 0px 1px 3px rgb(197, 197, 197);
+  background-color: white;
+  border-radius: 1rem;
+  font-size: 1.25em;
+}
+
+.card #delete {
+  position: absolute;
+  right: 1.35em;
+  top: 1.2em;
+  background-color: white;
+  border-radius: 50%;
+  height: min(1.25rem);
+  width: min(1.25rem);
+}
+
+.card #delete:hover {
+  background-color: var(--clr-secondary);
+}
+
+.card #status {
+  min-height: 20%;
+  border-radius: .5rem;
+  font-size: 1em;
+  font-weight: 600;
+  color: white;
+  background-color: rgb(122, 122, 122);
+}
+
+.card #status:hover {
+
 }
 
 .footer{
@@ -156,7 +194,7 @@ div.menu form.hidden {
   justify-content: center;
 }
 
-body, .banner, .main, .footer, .menu, .menu .buttons, .menu form {
+body, .banner, .main, .footer, .menu, .menu .buttons, .menu form, .card {
   display: flex;
 }
 

@@ -54,10 +54,6 @@ cancelBtn.addEventListener('click', () => {
     this.finishedReading = false;
   }
 
-  Book.prototype.displayInfo = function() {
-    console.log('lmao');
-  }
-
 confirmBtn.addEventListener('click', (e) => {
   e.preventDefault();
   toggleMenu();
@@ -71,27 +67,82 @@ confirmBtn.addEventListener('click', (e) => {
 
   bookList.push(book);
   localStorage.setItem('books', JSON.stringify(bookList));
+
+  displayBooks();
 })
 
 const main = document.querySelector('.main');
 
-function displayBooks() {
-  while(main.lastElementChild) {
-    main.removeChild(main.lastElementChild);
-  }
+  function displayBooks() {
+    while(main.lastElementChild) {
+      main.removeChild(main.lastElementChild);
+    }
 
-  bookList.forEach(book => {
-    createCard(book);
-  })
-}
+    bookList.forEach(book => {
+      createCard(book);
+    })
+  }
 
   function createCard(book) {
     const card = document.createElement('div');
     card.classList.add('card');
-    card.book = book;
     main.append(card);
 
-    book.displayInfo();
+    createDeleteBtn(book, card);
+    displayInfo(book, card);
+    createStatusBtn(book, card);
+  }
+  
+  function displayInfo(book, card) {
+    const titleTxt = document.createElement('h1');
+    titleTxt.textContent = book.title;
+    card.append(titleTxt);
+    
+    const authorTxt = document.createElement('p');
+    authorTxt.textContent = book.author;
+    card.append(authorTxt);
+    
+    const pageTxt = document.createElement('p');
+    pageTxt.textContent = book.pages;
+    card.append(pageTxt);
+    
+    const dateTxt = document.createElement('p');
+    dateTxt.textContent = book.date;
+    card.append(dateTxt);
+  }
+  
+  // ------------------------- CARDS -------------------------
+
+  function createDeleteBtn(book, card) {
+    const deleteBtn = document.createElement('button');
+    deleteBtn.id = ('delete');
+    deleteBtn.innerHTML = `<i class="fas fa-times"></i>`;
+    card.append(deleteBtn);
+
+    deleteBtn.addEventListener('click', () => {
+      result = confirm('Are you sure you want to delete this book?')
+      if(result) {
+        bookList.splice(bookList.indexOf(book), 1);
+        localStorage.setItem('books', JSON.stringify(bookList));
+        displayBooks();
+      }
+    })
   }
 
-
+  function createStatusBtn(book, card) {
+    const statusBtn = document.createElement('button');
+    statusBtn.id = 'status'
+    card.append(statusBtn)
+    
+    statusBtn.addEventListener('click', () => {
+      console.log(book.finishedReading);
+      if(book.finishedReading == false) {
+        book.finishedReading = true;
+        statusBtn.textContent = 'UNREAD';
+      } else if(book.finishedReading == true) {
+        book.finishedReading = false;
+        statusBtn.textContent = 'READ';
+      }
+    })
+  }
+  
