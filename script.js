@@ -13,6 +13,10 @@ const themeBtn = document.getElementById('theme');
 
 menuBtn.addEventListener('click', () => {
   toggleMenu();
+  if(!document.querySelector('form').classList.contains('hidden')) {
+    togglePopupForm();
+  }
+  adjustMenuPosition();
 });
 
   function toggleMenu() {
@@ -35,6 +39,24 @@ addBtn.addEventListener('click', () => {
 themeBtn.addEventListener('click', () => {
   console.log('dark mode');
 });
+
+  function adjustMenuPosition() {
+    const bottomOfWindow = window.scrollY + window.innerHeight;
+    const footerPosition = document.querySelector('.footer').offsetTop;
+    const menuBtns = document.querySelector('.buttons');
+    const menu = document.querySelector('.menu');
+
+    if(bottomOfWindow > footerPosition) {
+      menuBtns.style.bottom = `${bottomOfWindow - footerPosition + 20}px`;
+    } else if(menu.classList.contains('blurred')) {
+      console.log('lmao');
+      menuBtns.style.bottom = `1px`; 
+    }
+  }
+
+window.addEventListener('scroll', () => {
+  adjustMenuPosition();
+})
 
 // ------------------------- POPUP FORM -------------------------
 
@@ -68,6 +90,10 @@ confirmBtn.addEventListener('click', (e) => {
   bookList.push(book);
   localStorage.setItem('books', JSON.stringify(bookList));
 
+  document.getElementById('title').value = '';
+  document.getElementById('author').value = '';
+  document.getElementById('pages').value = '';
+
   displayBooks();
 })
 
@@ -79,18 +105,18 @@ const main = document.querySelector('.main');
     }
 
     bookList.forEach(book => {
-      createCard(book);
+      createCard(book, bookList);
     })
   }
 
-  function createCard(book) {
+  function createCard(book, bookList) {
     const card = document.createElement('div');
     card.classList.add('card');
     main.append(card);
 
     createDeleteBtn(book, card);
     displayInfo(book, card);
-    createStatusBtn(book, card);
+    createStatusBtn(book, card, bookList);
   }
   
   function displayInfo(book, card) {
@@ -129,9 +155,14 @@ const main = document.querySelector('.main');
     })
   }
 
-  function createStatusBtn(book, card) {
+  function createStatusBtn(book, card, bookList) {
     const statusBtn = document.createElement('button');
     statusBtn.id = 'status'
+    if(book.finishedReading == false) {
+      statusBtn.textContent = 'UNREAD';
+    } else if(book.finishedReading == true) {
+      statusBtn.textContent = 'FINISHED';
+    }
     card.append(statusBtn)
     
     statusBtn.addEventListener('click', () => {
@@ -141,8 +172,10 @@ const main = document.querySelector('.main');
         statusBtn.textContent = 'UNREAD';
       } else if(book.finishedReading == true) {
         book.finishedReading = false;
-        statusBtn.textContent = 'READ';
+        statusBtn.textContent = 'FINISHED';
       }
+      localStorage.setItem('books', JSON.stringify(bookList));
+      displayBooks();
     })
   }
   

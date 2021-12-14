@@ -67,11 +67,7 @@ body {
   font-size: 1em;
   font-weight: 600;
   color: white;
-  background-color: rgb(122, 122, 122);
-}
-
-.card #status:hover {
-
+  background-color: rgb(100, 161, 113);
 }
 
 .footer{
@@ -200,4 +196,15 @@ body, .banner, .main, .footer, .menu, .menu .buttons, .menu form, .card {
 
 body, h1, h2, h3, p {
   margin: 0;
+}
+
+@media (hover: none) {
+  .main {
+    padding-inline: 0rem;
+  }
+
+  .menu form {
+    font-size: 1.2em;
+    gap: 0.1em;
+  }
 }
