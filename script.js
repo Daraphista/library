@@ -1,8 +1,14 @@
 let bookList = localStorage.getItem('books') ? JSON.parse(localStorage.getItem('books')) : [];
 localStorage.setItem('books', JSON.stringify(bookList));
+let darkMode = localStorage.getItem('darkMode') ? JSON.parse(localStorage.getItem('darkMode')) : false;
+localStorage.setItem('darkMode', darkMode);
 
 window.addEventListener('load', () => {
   displayBooks();
+  
+  if(darkMode == true) {
+    toggleDarkMode();
+  }
 })
 
 // ------------------------- MENU -------------------------
@@ -45,17 +51,28 @@ addBtn.addEventListener('click', () => {
   }
 
 themeBtn.addEventListener('click', () => {
-  document.querySelector('body').classList.toggle('dark');
-  document.querySelector('.banner').classList.toggle('dark');
-  document.querySelector('.main').classList.toggle('dark');
-  document.querySelector('.footer').classList.toggle('dark');
-  document.querySelector('.card').classList.toggle('dark');
-  document.getElementById('delete').classList.toggle('dark');
-  const form = document.querySelector('form').classList.toggle('dark');
-  const buttons = document.querySelector('.buttons');
-  buttons.querySelectorAll('button').forEach(button => button.classList.toggle('dark'));
+  console.log(darkMode);
+  if(darkMode === false) {
+    localStorage.setItem('darkMode', true);
+    console.log(localStorage);
+  } else if(darkMode == true) {
+    localStorage.setItem('darkMode', false);
+  }
+  toggleDarkMode();
   toggleMenu();
 });
+
+  function toggleDarkMode() {
+    document.querySelector('body').classList.toggle('dark');
+    document.querySelector('.banner').classList.toggle('dark');
+    document.querySelector('.main').classList.toggle('dark');
+    document.querySelector('.footer').classList.toggle('dark');
+    document.querySelector('.card').classList.toggle('dark');
+    document.getElementById('delete').classList.toggle('dark');
+    const form = document.querySelector('form').classList.toggle('dark');
+    const buttons = document.querySelector('.buttons');
+    buttons.querySelectorAll('button').forEach(button => button.classList.toggle('dark'));
+  }
 
   function adjustMenuPosition() {
     const bottomOfWindow = window.scrollY + window.innerHeight;
