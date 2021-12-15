@@ -1,13 +1,2 @@
 # library
-TODO
-  HTML
-    - add cards
-  CSS
-    - style cards
-  JS
-    - add popup form when adding books
-    - add hamburger menu for add button and dark mode
-    - leave only the sort by checkbox on the command bar
-    - add ability to add or delete books
-    - sort by function
-    - dark mode
+This is a project from assigned to me by TheOdinProject. It's a digital library web app that will help you track all the books that you are reading by displaying cards to represent them. Each card displays important info about the book such as the title, author, and number of pages.
