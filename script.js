@@ -45,7 +45,16 @@ addBtn.addEventListener('click', () => {
   }
 
 themeBtn.addEventListener('click', () => {
-  console.log('dark mode');
+  document.querySelector('body').classList.toggle('dark');
+  document.querySelector('.banner').classList.toggle('dark');
+  document.querySelector('.main').classList.toggle('dark');
+  document.querySelector('.footer').classList.toggle('dark');
+  document.querySelector('.card').classList.toggle('dark');
+  document.getElementById('delete').classList.toggle('dark');
+  const form = document.querySelector('form').classList.toggle('dark');
+  const buttons = document.querySelector('.buttons');
+  buttons.querySelectorAll('button').forEach(button => button.classList.toggle('dark'));
+  toggleMenu();
 });
 
   function adjustMenuPosition() {
