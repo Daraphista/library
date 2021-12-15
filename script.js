@@ -33,7 +33,15 @@ addBtn.addEventListener('click', () => {
 })
 
   function togglePopupForm() {
-    document.querySelector('form').classList.toggle('hidden');
+    const form = document.querySelector('form');
+    const btns = document.querySelector('.buttons');
+
+    form.classList.toggle('hidden');
+    if(window.matchMedia("(hover: none)").matches) {
+      btns.style.display = (!form.classList.contains('hidden')) ? 'none' : 'flex';
+      form.style.margin = "0em";
+      form.style.width = "100%";
+    }
   }
 
 themeBtn.addEventListener('click', () => {
