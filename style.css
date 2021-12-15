@@ -208,13 +208,11 @@ body, h1, h2, h3, p {
     gap: 0.1em;
   }
 
-  .menu form button {
-    font-size: .5em;
+  .menu form button, .menu form input {
+    font-size: .75em;
   }
 
   .menu form .cancel {
-    /* min-width: 2em;
-    min-height: 2em; */
     font-size: 1em;
   }
 }
