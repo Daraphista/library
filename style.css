@@ -207,4 +207,8 @@ body, h1, h2, h3, p {
     font-size: 1.2em;
     gap: 0.1em;
   }
+
+  .menu form button, .menu form input{
+    font-size: .5em;
+  }
 }
